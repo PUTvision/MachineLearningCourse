@@ -2,6 +2,35 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn import datasets, svm
 from sklearn.model_selection import train_test_split
+from common import read_csv_file
+
+
+def todo_final_boss():
+    column_names = ['charging_time', 'battery_lasted']
+    status, data = read_csv_file('trainingdata.txt', column_names)
+    number_of_train_samples = 80
+
+    if not status:
+        return
+
+    train_data = data.values[0:number_of_train_samples]
+    test_data = data.values[number_of_train_samples:]
+
+    reg = svm.SVR(kernel='rbf')
+    reg.fit(train_data[:, 0].reshape(-1, 1), train_data[:, 1])
+
+    score = reg.score(test_data[:, 0].reshape(-1, 1), test_data[:, 1])
+    print("Wynik modelu: ", score)
+
+    prediciton = reg.predict(test_data[:, 0].reshape(-1, 1))
+    print(prediciton)
+
+    plt.scatter(test_data[:, 0].reshape(-1, 1), test_data[:, 1].reshape(-1, 1), label="Rzeczywiste")
+    plt.scatter(test_data[:, 0].reshape(-1, 1), prediciton, label="Predykcja")
+    plt.xlabel(column_names[0])
+    plt.ylabel(column_names[1])
+    plt.legend()
+    plt.show()
 
 
 def todo2_todo3():
