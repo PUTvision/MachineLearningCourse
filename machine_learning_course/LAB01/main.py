@@ -23,7 +23,6 @@ def todo_final_boss():
     print("Wynik modelu: ", score)
 
     prediciton = reg.predict(test_data[:, 0].reshape(-1, 1))
-    print(prediciton)
 
     plt.scatter(test_data[:, 0].reshape(-1, 1), test_data[:, 1].reshape(-1, 1), label="Rzeczywiste")
     plt.scatter(test_data[:, 0].reshape(-1, 1), prediciton, label="Predykcja")
@@ -186,3 +185,6 @@ def todo7():
         rozklad_string = rozklad_string + "\n"
 
     print("Rozklad na planszy: \n", rozklad_string)
+
+
+todo_final_boss()
