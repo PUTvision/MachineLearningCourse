@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from sklearn.tree import DecisionTreeClassifier
+from sklearn import metrics
 from mlxtend.plotting import plot_decision_regions
 from matplotlib import pyplot as plt
 from matplotlib import gridspec
@@ -16,6 +17,7 @@ import numpy as np
 def check_different_classificator(clf, clf_name, x_train, x_test, y_train, y_test, gs, grid, figure, plot=False):
     clf.fit(x_train, y_train)
     score = clf.score(x_test, y_test)
+    # score = metrics.accuracy_score()
     if plot:
         try:
             ax = plt.subplot(gs[grid[0], grid[1]])
@@ -30,25 +32,20 @@ def check_different_classificator(clf, clf_name, x_train, x_test, y_train, y_tes
 
 
 def todo1():
-    data = datasets.load_iris(as_frame=True)
-    iris_dataset = pd.DataFrame(data['data'], columns=data["feature_names"])
-    iris_dataset["Species"] = data['target']
-    iris_dataset["Species"] = iris_dataset["Species"].apply(lambda x: data["target_names"][x])
-    print(iris_dataset.head())
+    iris = datasets.load_iris(as_frame=True)
+    print(iris.frame.describe())
 
-    x_train, x_test, y_train, y_test = train_test_split(iris_dataset.loc[:, "sepal length (cm)":"petal width (cm)"],
-                                                        data['target'], test_size=0.2, random_state=42,
-                                                        stratify=data['target'])
+    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42,
+                                                        stratify=iris.target)
 
     min_max_scaler = MinMaxScaler()
+    # Dobieramy i dopasowujemy te dane tylko na zbiorze treningowym. Transform należy używać już na obywdówch zbiorach
     min_max_scaler.fit(x_train)
+    x_train_min_max_scaled = min_max_scaler.transform(x_train)
 
     standard_scaler = StandardScaler()
     standard_scaler.fit(x_train)
-
     x_train_standard_scaled = standard_scaler.transform(x_train)
-
-    x_train_min_max_scaled = min_max_scaler.transform(x_train)
 
     fig, axs = plt.subplots(2, 2)
     axs[0, 0].scatter(x_train.loc[:, "sepal length (cm)"], x_train.loc[:, "sepal width (cm)"], color='r')
@@ -86,15 +83,11 @@ def todo1():
 
 
 def todo2():
-    data = datasets.load_iris(as_frame=True)
-    iris_dataset = pd.DataFrame(data['data'], columns=data["feature_names"])
-    iris_dataset["Species"] = data['target']
-    iris_dataset["Species"] = iris_dataset["Species"].apply(lambda x: data["target_names"][x])
-    print(iris_dataset.head())
+    iris = datasets.load_iris(as_frame=True)
+    print(iris.frame.describe())
 
-    x_train, x_test, y_train, y_test = train_test_split(iris_dataset.loc[:, "sepal length (cm)":"petal width (cm)"],
-                                                        data['target'], test_size=0.2, random_state=42,
-                                                        stratify=data['target'])
+    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42,
+                                                        stratify=iris.target)
 
     min_max_scaler = MinMaxScaler()
     min_max_scaler.fit(x_train)
@@ -144,15 +137,11 @@ def todo2():
 
 
 def todo3():
-    data = datasets.load_iris(as_frame=True)
-    iris_dataset = pd.DataFrame(data['data'], columns=data["feature_names"])
-    iris_dataset["Species"] = data['target']
-    iris_dataset["Species"] = iris_dataset["Species"].apply(lambda x: data["target_names"][x])
-    print(iris_dataset.head())
+    iris = datasets.load_iris(as_frame=True)
+    print(iris.frame.describe())
 
-    x_train, x_test, y_train, y_test = train_test_split(iris_dataset.loc[:, "sepal length (cm)":"petal width (cm)"],
-                                                        data['target'], test_size=0.2, random_state=42,
-                                                        stratify=data['target'])
+    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42,
+                                                        stratify=iris.target)
 
     min_max_scaler = MinMaxScaler()
     min_max_scaler.fit(x_train)
@@ -189,15 +178,11 @@ def todo3():
 
 
 def todo4():
-    data = datasets.load_iris(as_frame=True)
-    iris_dataset = pd.DataFrame(data['data'], columns=data["feature_names"])
-    iris_dataset["Species"] = data['target']
-    iris_dataset["Species"] = iris_dataset["Species"].apply(lambda x: data["target_names"][x])
-    print(iris_dataset.head())
+    iris = datasets.load_iris(as_frame=True)
+    print(iris.frame.describe())
 
-    x_train, x_test, y_train, y_test = train_test_split(iris_dataset.loc[:, "sepal length (cm)":"petal width (cm)"],
-                                                        data['target'], test_size=0.2, random_state=42,
-                                                        stratify=data['target'])
+    x_train, x_test, y_train, y_test = train_test_split(iris.data, iris.target, test_size=0.2, random_state=42,
+                                                        stratify=iris.target)
 
     min_max_scaler = MinMaxScaler()
     min_max_scaler.fit(x_train)
@@ -214,6 +199,7 @@ def todo4():
     tuned_parameters = [{'criterion': ['gini', 'entropy'], 'splitter': ["best", "random"]}]
     clf = GridSearchCV(DecisionTreeClassifier(), param_grid=tuned_parameters)
     clf.fit(x_train_min_max_scaled, y_train)
+
     print(f"DecisionTree best params: {clf.best_params_}")
     print(f"DecisionTree score: {clf.score(x_test_min_max_scaled, y_test)}")
 
