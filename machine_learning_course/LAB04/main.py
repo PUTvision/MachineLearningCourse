@@ -4,6 +4,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import adjusted_rand_score, calinski_harabasz_score
 from matplotlib import pyplot as plt
 import pandas as pd
+import numpy as np
 
 iris = datasets.load_iris(as_frame=True)
 iris_df = pd.concat([iris.data, iris.target], axis=1)
@@ -98,6 +99,22 @@ def todo3():
     print(f"Wynik CHI Affinity propagation: {calinski_harabasz_score(iris.data, affinity_propagation.labels_)}")
 
 
+def todo4():
+    n_clusters_list = np.arange(2, 15)
+
+    inertia_dict = {}
+    for n_clusters in n_clusters_list:
+        k_means = KMeans(n_clusters=n_clusters)
+        k_means.fit(iris.data)
+        inertia_dict[n_clusters] = k_means.inertia_
+
+    print(inertia_dict)
+    inertia_df = pd.DataFrame.from_dict(inertia_dict, columns=["inertia"], orient="index")
+    inertia_df.plot(style='--b.')
+    plt.show()
+
+
 # todo1()
 # todo2()
-todo3()
+# todo3()
+todo4()
