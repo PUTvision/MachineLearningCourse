@@ -1,4 +1,7 @@
 from sklearn import datasets
+from sklearn.cluster import KMeans
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import adjusted_rand_score
 from matplotlib import pyplot as plt
 import pandas as pd
 
@@ -11,13 +14,13 @@ def todo1():
     axs = fig.add_subplot(111, projection='3d')
     axs.scatter(iris_df.loc[iris_df["target"] == 0, "sepal length (cm)"],
                 iris_df.loc[iris_df["target"] == 0, "sepal width (cm)"],
-                iris_df.loc[iris_df["target"] == 0, "petal width (cm)"],    color='r')
+                iris_df.loc[iris_df["target"] == 0, "petal width (cm)"], color='r')
     axs.scatter(iris_df.loc[iris_df["target"] == 1, "sepal length (cm)"],
                 iris_df.loc[iris_df["target"] == 1, "sepal width (cm)"],
-                iris_df.loc[iris_df["target"] == 1, "petal width (cm)"],    color='g')
+                iris_df.loc[iris_df["target"] == 1, "petal width (cm)"], color='g')
     axs.scatter(iris_df.loc[iris_df["target"] == 2, "sepal length (cm)"],
                 iris_df.loc[iris_df["target"] == 2, "sepal width (cm)"],
-                iris_df.loc[iris_df["target"] == 2, "petal width (cm)"],    color='b')
+                iris_df.loc[iris_df["target"] == 2, "petal width (cm)"], color='b')
 
     axs.legend([iris["target_names"][0], iris["target_names"][1], iris["target_names"][2]])
 
@@ -29,4 +32,51 @@ def todo1():
     plt.show()
 
 
-todo1()
+def todo2():
+    k_means = KMeans(n_clusters=3)
+    k_means.fit(iris.data)
+
+    fig = plt.figure()
+    axs = fig.add_subplot(111, projection='3d')
+    axs.scatter(iris_df.loc[iris_df["target"] == 0, "sepal length (cm)"],
+                iris_df.loc[iris_df["target"] == 0, "sepal width (cm)"],
+                iris_df.loc[iris_df["target"] == 0, "petal width (cm)"], color='r')
+    axs.scatter(iris_df.loc[iris_df["target"] == 1, "sepal length (cm)"],
+                iris_df.loc[iris_df["target"] == 1, "sepal width (cm)"],
+                iris_df.loc[iris_df["target"] == 1, "petal width (cm)"], color='g')
+    axs.scatter(iris_df.loc[iris_df["target"] == 2, "sepal length (cm)"],
+                iris_df.loc[iris_df["target"] == 2, "sepal width (cm)"],
+                iris_df.loc[iris_df["target"] == 2, "petal width (cm)"], color='b')
+
+    iris_df["kmean_labels"] = k_means.labels_
+
+    axs.scatter(iris_df.loc[iris_df["kmean_labels"] == 0, "sepal length (cm)"],
+                iris_df.loc[iris_df["kmean_labels"] == 0, "sepal width (cm)"],
+                iris_df.loc[iris_df["kmean_labels"] == 0, "petal width (cm)"], color='r', marker='+')
+    axs.scatter(iris_df.loc[iris_df["kmean_labels"] == 1, "sepal length (cm)"],
+                iris_df.loc[iris_df["kmean_labels"] == 1, "sepal width (cm)"],
+                iris_df.loc[iris_df["kmean_labels"] == 1, "petal width (cm)"], color='g', marker='+')
+    axs.scatter(iris_df.loc[iris_df["kmean_labels"] == 2, "sepal length (cm)"],
+                iris_df.loc[iris_df["kmean_labels"] == 2, "sepal width (cm)"],
+                iris_df.loc[iris_df["kmean_labels"] == 2, "petal width (cm)"], color='b', marker='+')
+
+    axs.set_title('Przynaleznosc do klas z target')
+    axs.set_xlabel('Sepal length (cm)')
+    axs.set_ylabel('Sepal width (cm)')
+    axs.set_zlabel('Petal width (cm)')
+    print("Klasa 0 z target zostala w kmean oznaczona jako klasa 1 i odwrotnie.")
+
+    cluster_centers = k_means.cluster_centers_
+    axs.scatter(cluster_centers[0, 0], cluster_centers[0, 1], cluster_centers[0, 3], s=500, color='r', marker='v')
+    axs.scatter(cluster_centers[1, 0], cluster_centers[1, 1], cluster_centers[1, 3], s=500, color='g', marker='v')
+    axs.scatter(cluster_centers[2, 0], cluster_centers[2, 1], cluster_centers[2, 3], s=500, color='b', marker='v')
+    axs.legend(["0 target", "1 target", "2 target", "0 kmean", "1 kmean", "2 kmean", "0 center", "1 center",
+                "2 center"])
+
+    print(f"Wynik: {adjusted_rand_score(iris.target.values, k_means.labels_)}")
+
+    plt.show()
+
+
+# todo1()
+todo2()
