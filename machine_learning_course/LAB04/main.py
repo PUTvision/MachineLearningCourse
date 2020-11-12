@@ -1,7 +1,7 @@
 from sklearn import datasets
-from sklearn.cluster import KMeans
+from sklearn.cluster import KMeans, MeanShift, AffinityPropagation
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import adjusted_rand_score
+from sklearn.metrics import adjusted_rand_score, calinski_harabasz_score
 from matplotlib import pyplot as plt
 import pandas as pd
 
@@ -78,5 +78,26 @@ def todo2():
     plt.show()
 
 
+def todo3():
+    k_means = KMeans(n_clusters=3)
+    k_means.fit(iris.data)
+
+    mean_shift = MeanShift()
+    mean_shift.fit(iris.data)
+
+    affinity_propagation = AffinityPropagation()
+    affinity_propagation.fit(iris.data)
+
+    print(f"Wynik ARS Kmeans: {adjusted_rand_score(iris.target.values, k_means.labels_)}")
+    print(f"Wynik ARS Mean shift: {adjusted_rand_score(iris.target.values, mean_shift.labels_)}")
+    print(f"Wynik ARS Affinity propagation: {adjusted_rand_score(iris.target.values, affinity_propagation.labels_)}")
+
+    # Czym wyzszy wynik CHI tym lepiej zdefiniowane klastry
+    print(f"Wynik CHI Kmeans: {calinski_harabasz_score(iris.data, k_means.labels_)}")
+    print(f"Wynik CHI Mean shift: {calinski_harabasz_score(iris.data, mean_shift.labels_)}")
+    print(f"Wynik CHI Affinity propagation: {calinski_harabasz_score(iris.data, affinity_propagation.labels_)}")
+
+
 # todo1()
-todo2()
+# todo2()
+todo3()
