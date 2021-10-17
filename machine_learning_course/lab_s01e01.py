@@ -46,6 +46,13 @@ def classes():
 
 def todo_4():
     faces = datasets.fetch_olivetti_faces()
+    # alternative:
+    #  X, y = datasets.fetch_olivetti_faces(return_X_y=True)
+
+    print(faces)
+    print(faces.DESCR)
+    print(faces.data)
+    print(faces.target)
 
     image_shape = (64, 64)
     n_row, n_col = 2, 3
@@ -101,8 +108,47 @@ def todo_6():
     plt.show()
 
 
+def todo_6_2():
+    x, y = datasets.make_classification(
+        n_samples=100,
+        n_features=3,
+        n_informative=3, n_redundant=0, n_repeated=0,
+        n_classes=6,
+        n_clusters_per_class=1,
+        class_sep=5.0,
+        flip_y=0.0
+    )
+
+    # print(x)
+    # print(x[:, 0])
+
+    from mpl_toolkits.mplot3d import Axes3D
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    ax.scatter(x[:, 0], x[:, 1], x[:, 2], c=y, marker='o')
+
+    ax.set_xlabel('X Label')
+    ax.set_ylabel('Y Label')
+    ax.set_zlabel('Z Label')
+
+    plt.show()
+
+    # plt.scatter(x[:, 0], x[:, 1] , c=y)
+    # plt.show()
+
+
 def todo_7():
-    pass
+    d = datasets.fetch_openml(data_id=40536, as_frame=True)
+    print(type(d))
+
+    diabetes = datasets.load_diabetes(as_frame=True)
+    print(diabetes.frame.head(5))
+    from pandasgui import show
+    show(diabetes.frame, settings={'block': True})
+
+    print('stop')
 
 
 def todo_final_boss():
@@ -187,13 +233,41 @@ def todo_final_boss():
     plt.show()
 
 
+def regressor_9000(x: float) -> float:
+    if x >= 4.0:
+        return 8.0
+    else:
+        # 0.14,0.28
+        # 2.00,4.00
+        # x     y
+        return x*2
+
+
+def todo_final_boss_2():
+    data = np.loadtxt('./battery_problem_data.csv', delimiter=',')
+    print(data)
+
+    x = data[:, 0]
+    y = data[:, 1]
+
+    y_predicted = []
+    for single_data in x:
+        y_predicted.append(regressor_9000(single_data))
+
+    plt.scatter(x, y)
+    plt.scatter(x, y_predicted, marker='*', c='red')
+    plt.show()
+
+
 def main():
-    classes()
-    todo_4()
-    todo_5()
-    todo_6()
+    # classes()
+    # todo_4()
+    # todo_5()
+    # todo_6()
+    # todo_6_2()
     todo_7()
     todo_final_boss()
+    todo_final_boss_2()
 
     X, y = datasets.make_classification(
         n_samples=10000,
