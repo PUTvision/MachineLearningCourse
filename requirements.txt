@@ -5,3 +5,4 @@ numpy
 
 pandasgui
 pypiwin32  # requirement for pandsasgui under windows
+gap-stat
