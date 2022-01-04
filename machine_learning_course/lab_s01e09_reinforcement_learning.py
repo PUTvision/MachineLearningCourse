@@ -16,27 +16,32 @@ def ex_01():
     env = gym.make('CartPole-v1')  # utworzenie środowiska
     env.seed(42)
 
-    print(env.action_space)
-    print(env.observation_space)
-    print(env.observation_space.high)
-    print(env.observation_space.low)
+    print(f'{env.action_space=}')
+    print(f'{env.observation_space=}')
+    print(f'{env.observation_space.high=}')
+    print(f'{env.observation_space.low=}')
 
     action = 1
     env.reset()  # reset środowiska do stanu początkowego
     for _ in range(1000):  # kolejne kroki symulacji
         env.render()  # renderowanie obrazu
-        time.sleep(0.1)
-        if action:
-            # action = env.action_space.sample()  # wybór akcji (tutaj: losowa akcja)
-            action = 0
-        else:
-            action = 1
-        print(action)
+        time.sleep(0.05)
+
+        # completely random action
+        action = env.action_space.sample()  # wybór akcji (tutaj: losowa akcja)
+
+        # flip-flopping the action
+        # if action:
+        #     action = 0
+        # else:
+        #     action = 1
+
         observation, reward, done, info = env.step(action)  # wykonanie akcji
-        print(f'observation: {observation}, reward: {reward}, info: {info}')
+        print(f'{action=}, {observation=}, {reward=}, {info=}')
         if done:
             print('The end!')
             time.sleep(1)
+            env.reset()
     env.close()  # zamknięcie środowiska
 
 
@@ -104,7 +109,7 @@ def ex_02():
 
 
 def main():
-    # ex_01()
+    ex_01()
     ex_02()
 
 
