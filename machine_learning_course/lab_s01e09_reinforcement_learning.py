@@ -1,9 +1,15 @@
+import os
+import random
+import time
+
 import gym
 import numpy as np
 
-import time
-import random
-import os
+
+# use following command to install required package and all the dependencies:
+# pip install gym[box2d,atari]
+# for windows replace one of the atari files:
+# pip install -f https://github.com/Kojoley/atari-py/releases atari_py
 
 
 def ex_01():
