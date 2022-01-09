@@ -21,7 +21,7 @@ def ex_01():
     print(f'{env.observation_space.high=}')
     print(f'{env.observation_space.low=}')
 
-    action = 1
+    action = 0
     env.reset()  # reset środowiska do stanu początkowego
     for _ in range(1000):  # kolejne kroki symulacji
         env.render()  # renderowanie obrazu
@@ -46,22 +46,21 @@ def ex_01():
 
 
 def ex_02():
-    env = gym.make('FrozenLake-v0')  # utworzenie środowiska
+    env = gym.make('FrozenLake-v1')  # utworzenie środowiska
     env.seed(42)
 
-    print(env.action_space)
-    print(env.observation_space)
+    print(f'{env.action_space=}')
+    print(f'{env.observation_space=}')
 
     q_table = np.zeros((env.observation_space.n, env.action_space.n), dtype=np.float64)
-    lr = 0.1
-    discount_factor = 0.6
-    epsilon = 0.5
+    lr = 0.3
+    discount_factor = 0.95
+    epsilon = 0.9
 
-    no_training_episodes = 10000
+    no_training_episodes = 20000
 
     for i in range(no_training_episodes):  # kolejne kroki symulacji
         observation = env.reset()  # reset środowiska do stanu początkowego
-        # env.render()
         done = False
         total_reward = 0
         while not done:
@@ -73,16 +72,16 @@ def ex_02():
                 action = np.argmax(q_table[observation])
             next_observation, reward, done, info = env.step(action)  # wykonanie akcji
             total_reward += reward
-            # print(f'observation: {observation}, reward: {reward}, info: {info}')
+
+            # print(f'{action=}, {observation=}, {reward=}, {info=}')
 
             max_next_observation = np.max(q_table[next_observation])
 
-            q_table[observation, action] = (1 - lr) * q_table[observation, action] + lr * (reward + discount_factor * max_next_observation)
+            q_table[observation, action] = \
+                (1 - lr) * q_table[observation, action] + lr * (reward + discount_factor * max_next_observation)
 
             observation = next_observation
 
-            # env.render()  # renderowanie obrazu
-            # time.sleep(0.1)
         if i % 100 == 0:
             print(f'total_reward episode: {i+1}: {total_reward}')
 

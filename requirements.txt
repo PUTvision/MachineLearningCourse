@@ -2,6 +2,14 @@ scikit-learn==1.0
 matplotlib
 pandas
 numpy
+mlxtend
+gap_stat
+seaborn
+missingno
+
+torch
+torchvision
+pytorch-lightning
 
 pandasgui
 pypiwin32  # requirement for pandsasgui under windows
