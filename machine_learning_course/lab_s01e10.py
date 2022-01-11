@@ -1,11 +1,22 @@
-import pandas as pd
-import darts
-import matplotlib.pyplot as plt
+from typing import Tuple
 
+import matplotlib.pyplot as plt
+import sklearn
+import pandas as pd
+
+import darts
 from darts.models import ExponentialSmoothing, NaiveDrift, NaiveMean, AutoARIMA, RegressionModel, NaiveSeasonal, Theta
 from darts.metrics import mape
 from darts.utils.statistics import check_seasonality
-import sklearn
+
+
+def load_and_split_air_passenger() -> Tuple[darts.TimeSeries, darts.TimeSeries]:
+    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
+    series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
+
+    train, test = series[:-36], series[-36:]
+
+    return train, test
 
 
 def todo_1():
@@ -42,10 +53,7 @@ def todo_3():
 
 
 def todo_4_5():
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
-    series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
-
-    train, test = series[:-36], series[-36:]
+    train, test = load_and_split_air_passenger()
 
     model = NaiveDrift()
     model.fit(train)
@@ -62,10 +70,7 @@ def todo_4_5():
 
 
 def todo_6():
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
-    series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
-
-    train, test = series[:-36], series[-36:]
+    train, test = load_and_split_air_passenger()
 
     for m in range(2, 48):
         is_seasonal, period = check_seasonality(train, m=m, max_lag=48, alpha=.05)
@@ -87,10 +92,7 @@ def todo_6():
 
 
 def todo_6_last_question():
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
-    series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
-
-    train, test = series[:-36], series[-36:]
+    train, test = load_and_split_air_passenger()
 
     model_drift = NaiveDrift()
     model_drift.fit(train)
@@ -114,10 +116,7 @@ def todo_6_last_question():
 
 
 def todo_7():
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
-    series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
-
-    train, test = series[:-36], series[-36:]
+    train, test = load_and_split_air_passenger()
 
     model_exponential = ExponentialSmoothing()
     model_exponential.fit(train)
