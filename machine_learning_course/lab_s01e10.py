@@ -140,6 +140,23 @@ def todo_7():
     plt.show()
 
 
+def todo_8():
+    train, test = load_and_split_air_passenger()
+
+    model = RegressionModel(36, model=sklearn.tree.DecisionTreeRegressor())
+    model.fit(train)
+
+    prediction = model.predict(len(test))
+    score = mape(actual_series=test, pred_series=prediction)
+    print(f'{score=}')
+
+    train.plot()
+    test.plot(label='test')
+    prediction.plot(label='forecast')
+    plt.legend()
+    plt.show()
+
+
 def main():
     todo_1()
     todo_2()
@@ -147,6 +164,7 @@ def main():
     todo_4_5()
     todo_6()
     todo_7()
+    todo_8()
 
 
 if __name__ == '__main__':
