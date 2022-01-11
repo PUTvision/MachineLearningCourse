@@ -163,6 +163,7 @@ def main():
     todo_3()
     todo_4_5()
     todo_6()
+    todo_6_last_question()
     todo_7()
     todo_8()
 
