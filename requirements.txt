@@ -1,4 +1,4 @@
-scikit-learn==1.0
+scikit-learn
 matplotlib
 pandas
 numpy
@@ -6,16 +6,18 @@ mlxtend
 gap_stat
 seaborn
 missingno
-
-torch
-torchvision
-pytorch-lightning
-
-pandasgui
-pypiwin32  # requirement for pandsasgui under windows
 gap-stat
 
 torch
 torchvision
 torchaudio
 torchtext
+pytorch-lightning
+
+u8darts[torch, pmdarima]
+
+pandasgui
+pypiwin32  # requirement for pandsasgui under windows
+# wordcloud - on windows has to be installed from mr Gholke repository of prebuil packages
+
+click

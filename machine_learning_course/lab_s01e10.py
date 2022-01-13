@@ -157,6 +157,14 @@ def todo_8():
     plt.show()
 
 
+def todo_9():
+    # TODO(MF): add support for another csv with data
+    # TODO(MF): add sample with loading dataset from darts libarry
+    darts.datase
+    df = pd.read_csv('.\..\data\daily_min_temperatures_Melbourne_1981_1990.csv', delimiter=",")
+    pass
+
+
 def main():
     todo_1()
     todo_2()
