@@ -1,5 +1,3 @@
-import inspect
-
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
@@ -8,8 +6,14 @@ from sklearn import datasets
 from sklearn.model_selection import train_test_split
 
 
+def print_function_name(number_of_empty_lines_before: int = 3) -> None:
+    import inspect
+    print('\n'*number_of_empty_lines_before)
+    print(f'{inspect.stack()[0][3]}')
+
+
 def todo_2():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     digits = datasets.load_digits()
 
@@ -32,7 +36,7 @@ def todo_2():
 
 
 def todo_3():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     digits = datasets.load_digits()
 
@@ -46,7 +50,7 @@ def todo_3():
 
 
 def todo_4():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     faces = datasets.fetch_olivetti_faces()
     # alternative:
@@ -80,7 +84,7 @@ def todo_4():
 
 
 def todo_5():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     diabetes = datasets.load_diabetes(as_frame=True)
     print(diabetes.DESCR)
@@ -92,7 +96,7 @@ def todo_5():
 
 
 def todo_6():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     X, y = datasets.make_classification(
         n_features=3, n_redundant=0, n_repeated=0, n_informative=3,
@@ -113,7 +117,7 @@ def todo_6():
 
 
 def todo_6_2():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     x, y = datasets.make_classification(
         n_samples=100,
@@ -135,7 +139,7 @@ def todo_6_2():
 
 
 def todo_7():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     openml_dataset = datasets.fetch_openml(data_id=40536, as_frame=True)
     print(f'{type(openml_dataset)=}')
@@ -143,14 +147,14 @@ def todo_7():
 
 
 def todo_8():
-    print('\n\n\nTODO 8')
+    print_function_name()
 
     battery_problem_data = np.loadtxt(fname='./battery_problem_data.csv', delimiter=',')
     print(f'{battery_problem_data=}')
 
 
 def todo_9_10():
-    print(f'\n\n\n{inspect.stack()[0][3]}')
+    print_function_name()
 
     from sklearn.tree import DecisionTreeClassifier
     from sklearn import tree
