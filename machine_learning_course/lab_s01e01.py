@@ -149,7 +149,7 @@ def todo_7():
 def todo_8():
     print_function_name()
 
-    battery_problem_data = np.loadtxt(fname='./battery_problem_data.csv', delimiter=',')
+    battery_problem_data = np.loadtxt(fname='./../data/battery_problem_data.csv', delimiter=',')
     print(f'{battery_problem_data=}')
 
 
@@ -174,7 +174,7 @@ def todo_9_10():
     print(f'{clf.predict([[1, 0]])=}')
     print(f'{clf.predict([[1, 1]])=}')
 
-    tree.plot_tree(clf, filled=True, class_names=['0', '1'])
+    tree.plot_tree(clf, feature_names=['X1', 'X2'], filled=True, class_names=['0', '1'])
     plt.show()
 
 
