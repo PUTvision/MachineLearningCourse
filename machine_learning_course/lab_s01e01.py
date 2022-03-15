@@ -1,11 +1,16 @@
-from sklearn import datasets, metrics
-from sklearn.model_selection import train_test_split
+import inspect
 
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
 
-def classes():
+
+def todo_2():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
+
     digits = datasets.load_digits()
 
     print(digits.DESCR)
@@ -17,8 +22,6 @@ def classes():
     print(digits.data[-1])
     print(digits.images[-1])
 
-    import matplotlib.pyplot as plt
-    #plt.figure()
     index = -1
     print(digits.target[index])
     plt.imshow(digits.images[index], cmap=plt.cm.gray_r)
@@ -27,32 +30,31 @@ def classes():
     plt.imshow([digits.data[index]], cmap=plt.cm.gray_r)
     plt.show()
 
-    from sklearn import svm
-    clf = svm.SVC()
-    clf.fit(digits.data[:-1], digits.target[:-1])
 
-    print(clf.predict(digits.data[-1:]))
+def todo_3():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
+
+    digits = datasets.load_digits()
 
     X_train, X_test, y_train, y_test = train_test_split(
         digits.data, digits.target, test_size=0.33, random_state=42
     )
 
-    clf = svm.SVC()
-    clf.fit(X_train, y_train)
-
-    print(clf.predict(X_test))
-    print(metrics.classification_report(y_test, clf.predict(X_test)))
+    print(f'{len(digits.data)=}')
+    print(f'{len(X_train.data)=}')
+    print(f'{len(X_test.data)=}')
 
 
 def todo_4():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
+
     faces = datasets.fetch_olivetti_faces()
     # alternative:
     #  X, y = datasets.fetch_olivetti_faces(return_X_y=True)
 
-    print(faces)
     print(faces.DESCR)
-    print(faces.data)
-    print(faces.target)
+    print(f'{faces.data=}')
+    print(f'{faces.target=}')
 
     image_shape = (64, 64)
     n_row, n_col = 2, 3
@@ -78,8 +80,9 @@ def todo_4():
 
 
 def todo_5():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
+
     diabetes = datasets.load_diabetes(as_frame=True)
-    print(diabetes)
     print(diabetes.DESCR)
     print(f'diabetes data:\n {diabetes.data},\n len: {len(diabetes.data)}')
     print(f'diabetes target:\n {diabetes.target},\n len: {len(diabetes.target)}')
@@ -89,6 +92,8 @@ def todo_5():
 
 
 def todo_6():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
+
     X, y = datasets.make_classification(
         n_features=3, n_redundant=0, n_repeated=0, n_informative=3,
         n_classes=3,
@@ -99,9 +104,8 @@ def todo_6():
     plt.scatter(X[:, 0], X[:, 1], marker='o', c=y, s=25, edgecolor='k')
     plt.show()
 
-    print(y)
+    print(f'{y=}')
 
-    from mpl_toolkits.mplot3d import Axes3D
     fig = plt.figure()
     ax = Axes3D(fig)
     ax.scatter(X[:, 0], X[:, 1], X[:, 2], s=25, c=y)
@@ -109,6 +113,8 @@ def todo_6():
 
 
 def todo_6_2():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
+
     x, y = datasets.make_classification(
         n_samples=100,
         n_features=3,
@@ -119,179 +125,65 @@ def todo_6_2():
         flip_y=0.0
     )
 
-    # print(x)
-    # print(x[:, 0])
-
-    from mpl_toolkits.mplot3d import Axes3D
-
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
-
     ax.scatter(x[:, 0], x[:, 1], x[:, 2], c=y, marker='o')
-
-    ax.set_xlabel('X Label')
-    ax.set_ylabel('Y Label')
-    ax.set_zlabel('Z Label')
-
+    ax.set_xlabel('X')
+    ax.set_ylabel('Y')
+    ax.set_zlabel('Z')
     plt.show()
-
-    # plt.scatter(x[:, 0], x[:, 1] , c=y)
-    # plt.show()
 
 
 def todo_7():
-    d = datasets.fetch_openml(data_id=40536, as_frame=True)
-    print(type(d))
+    print(f'\n\n\n{inspect.stack()[0][3]}')
 
-    diabetes = datasets.load_diabetes(as_frame=True)
-    print(diabetes.frame.head(5))
-    from pandasgui import show
-    show(diabetes.frame, settings={'block': True})
-
-    print('stop')
+    openml_dataset = datasets.fetch_openml(data_id=40536, as_frame=True)
+    print(f'{type(openml_dataset)=}')
+    print(f'{openml_dataset=}')
 
 
-def todo_final_boss():
-    data = np.loadtxt(fname='./battery_problem_data.csv', delimiter=',')
-    # print(data)
+def todo_8():
+    print('\n\n\nTODO 8')
 
-    X = data[:, 0].reshape(-1, 1)
-    y = data[:, 1]
+    battery_problem_data = np.loadtxt(fname='./battery_problem_data.csv', delimiter=',')
+    print(f'{battery_problem_data=}')
 
-    print(y)
-    print(len(y))
 
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+def todo_9_10():
+    print(f'\n\n\n{inspect.stack()[0][3]}')
 
+    from sklearn.tree import DecisionTreeClassifier
     from sklearn import tree
-    from sklearn.model_selection import cross_val_score
-    regressor = tree.DecisionTreeRegressor()
-    regressor.fit(X_train, y_train)
 
-    print(metrics.check_scoring(regressor))
+    # OR gate
+    X = [[0, 0],
+         [0, 1],
+         [1, 0],
+         [1, 1]]
+    y = [0, 1, 1, 1]
 
-    print(cross_val_score(regressor, X, y, cv=3))
+    clf = DecisionTreeClassifier()
+    clf.fit(X, y)
 
-    from sklearn import linear_model
-    # Create linear regression object
-    regr = linear_model.LinearRegression()
+    print(f'{clf.predict([[0, 0]])=}')
+    print(f'{clf.predict([[0, 1]])=}')
+    print(f'{clf.predict([[1, 0]])=}')
+    print(f'{clf.predict([[1, 1]])=}')
 
-    # Train the model using the training sets
-    regr.fit(X_train, y_train)
-
-    # Make predictions using the testing set
-    y_pred = regr.predict(X_test)
-
-    print('Coefficients: \n', regr.coef_)
-
-    from sklearn.metrics import mean_squared_error, r2_score
-    print('Mean squared error: %.2f'
-          % mean_squared_error(y_test, y_pred))
-
-    print('Coefficient of determination: %.2f'
-          % r2_score(y_test, y_pred))
-
-
-
-    y_predicted = regressor.predict(X_test)
-
-    print('Mean squared error: %.2f'
-          % mean_squared_error(y_test, y_predicted))
-
-    print('Coefficient of determination: %.2f'
-          % r2_score(y_test, y_predicted))
-
-    print(y_predicted)
-    print(len(y_predicted))
-
-    print(y_test)
-    print(len(y_test))
-
-    print(y_predicted-y_test)
-
-    from sklearn.preprocessing import PolynomialFeatures
-    poly = PolynomialFeatures(degree=2)
-
-    poly.fit_transform(X_train)
-
-    from sklearn.pipeline import Pipeline
-    from sklearn.linear_model import LinearRegression
-    model = Pipeline([('poly', PolynomialFeatures(degree=3)), ('linear', LinearRegression(fit_intercept=False))])
-    model = model.fit(X_train, y_train)
-
-    y_poly_predicted = model.predict(X_test)
-    print('Mean squared error: %.2f'
-          % mean_squared_error(y_test, y_poly_predicted))
-
-    print('Coefficient of determination: %.2f'
-          % r2_score(y_test, y_poly_predicted))
-
-    plt.scatter(X_test, y_test, marker='o')
-    plt.scatter(X_test, y_predicted, marker='x')
-    plt.scatter(X_test, y_poly_predicted, color='red', marker='*')
-    plt.plot(X_test, y_pred, color='blue', linewidth=3)
-    plt.show()
-
-
-def regressor_9000(x: float) -> float:
-    if x >= 4.0:
-        return 8.0
-    else:
-        # 0.14,0.28
-        # 2.00,4.00
-        # x     y
-        return x*2
-
-
-def todo_final_boss_2():
-    data = np.loadtxt('./battery_problem_data.csv', delimiter=',')
-    print(data)
-
-    x = data[:, 0]
-    y = data[:, 1]
-
-    y_predicted = []
-    for single_data in x:
-        y_predicted.append(regressor_9000(single_data))
-
-    plt.scatter(x, y)
-    plt.scatter(x, y_predicted, marker='*', c='red')
+    tree.plot_tree(clf, filled=True, class_names=['0', '1'])
     plt.show()
 
 
 def main():
-    # classes()
-    # todo_4()
-    # todo_5()
-    # todo_6()
-    # todo_6_2()
+    todo_2()
+    todo_3()
+    todo_4()
+    todo_5()
+    todo_6()
+    todo_6_2()
     todo_7()
-    todo_final_boss()
-    todo_final_boss_2()
-
-    X, y = datasets.make_classification(
-        n_samples=10000,
-        weights=[0.95, 0.001],
-        n_classes=2,
-        n_features=4, n_redundant=0, n_repeated=0, n_informative=2,
-        class_sep=1.0,
-        random_state=1,
-        n_clusters_per_class=1
-    )
-    plt.scatter(X[:, 0], X[:, 1], marker='o', c=y, s=25, edgecolor='k')
-    plt.show()
-
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.20, random_state=42
-    )
-
-    from sklearn import svm
-    clf = svm.SVC(class_weight='balanced')
-    # clf = svm.SVC()
-    clf.fit(X_train, y_train)
-
-    print(metrics.classification_report(y_test, clf.predict(X_test)))
-    print(metrics.balanced_accuracy_score(y_test, clf.predict(X_test)))
+    todo_8()
+    todo_9_10()
 
 
 if __name__ == '__main__':
