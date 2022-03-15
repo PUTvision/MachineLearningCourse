@@ -9,7 +9,7 @@ from sklearn.model_selection import train_test_split
 def print_function_name(number_of_empty_lines_before: int = 3) -> None:
     import inspect
     print('\n'*number_of_empty_lines_before)
-    print(f'{inspect.stack()[0][3]}')
+    print(f'{inspect.stack()[1][3]}')
 
 
 def todo_2():
