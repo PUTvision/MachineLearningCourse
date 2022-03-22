@@ -9,40 +9,23 @@ from sklearn import model_selection
 from sklearn import preprocessing
 from sklearn import pipeline
 
-
-def todo1():
-    X = [[0, 0],
-         [0, 1],
-         [1, 0],
-         [1, 1]]
-    y = [0, 1, 1, 1]
-
-    clf = tree.DecisionTreeClassifier()
-    clf.fit(X, y)
-
-    print(clf.predict(
-        [
-            [1, 1],
-            [0, 0],
-            [1, 0],
-            [0, 1],
-            [-1, -1]
-        ]
-    ))
-
-    tree.plot_tree(
-        clf,
-        feature_names=['X1', 'X2'],
-        # class_names=[],
-        filled=True
-    )
-    plt.show()
+from lab_s01_utils import print_function_name
 
 
-def todo2():
-    dict_brand = {'VW': 0, 'Ford': 1, 'Opel': 2}
-    dict_damaged = {'tak': 0, 'nie': 1}
-    print(dict_brand['VW'])
+def todo_1():
+    print_function_name()
+
+
+def todo_2():
+    print_function_name()
+
+
+def todo_3():
+    print_function_name()
+
+    brands_name = {'VW': 0, 'Ford': 1, 'Opel': 2}
+    damaged_status = {'tak': 0, 'nie': 1}
+    print(f'{brands_name["VW"]=}')
 
     # marka - przebieg - czy uszkodzony
     X = [
@@ -56,9 +39,9 @@ def todo2():
     ]
 
     for x in X:
-        x[0] = dict_brand[x[0]]
-        x[2] = dict_damaged[x[2]]
-    print(X)
+        x[0] = brands_name[x[0]]
+        x[2] = damaged_status[x[2]]
+    print(f'{X=}')
 
     y = [
         0,
@@ -73,11 +56,7 @@ def todo2():
     clf = tree.DecisionTreeClassifier()
     clf.fit(X, y)
 
-    print(clf.predict(
-        [
-            [dict_brand['Opel'], 100000, dict_damaged['nie']]
-        ]
-    ))
+    print(f'{clf.predict([[brands_name["Opel"], 100000, damaged_status["nie"]]])=}')
 
     tree.plot_tree(
         clf,
@@ -88,7 +67,9 @@ def todo2():
     plt.show()
 
 
-def todo3():
+def todo_4():
+    print_function_name()
+
     digits = datasets.load_digits()
 
     X_train, X_test, y_train, y_test = model_selection.train_test_split(
@@ -112,14 +93,17 @@ def todo3():
             plt.show()
 
 
-def print_regressor_score(y_test: np.ndarray, y_predicted: np.ndarray) -> None:
+def _print_regressor_score(y_test: np.ndarray, y_predicted: np.ndarray) -> None:
     print(f'mae: {metrics.mean_absolute_error(y_test, y_predicted)}')
     print(f'mse: {metrics.mean_squared_error(y_test, y_predicted)}')
-    print(f'r2: {metrics.r2_score(y_test, y_predicted)}')
+    print(f'Coefficient of determination (r2): {metrics.r2_score(y_test, y_predicted)}')
+    print('\n')
 
 
-def todo4():
-    data = np.loadtxt(fname='./battery_problem_data.csv', delimiter=',')
+def todo_5_6():
+    print_function_name()
+
+    data = np.loadtxt(fname='./../data/battery_problem_data.csv', delimiter=',')
 
     X = data[:, 0].reshape(-1, 1)
     y = data[:, 1]
@@ -143,13 +127,15 @@ def todo4():
     polynomial_regressor.fit(X_train, y_train)
     y_predicted_polynomial = polynomial_regressor.predict(X_test)
 
+    print(metrics.check_scoring(decision_tree_regressor))
+
     print('Decision tree regressor:')
-    print_regressor_score(y_test, y_predicted_decision_tree)
+    _print_regressor_score(y_test, y_predicted_decision_tree)
     print('Linear regressor:')
-    print_regressor_score(y_test, y_predicted_linear)
+    _print_regressor_score(y_test, y_predicted_linear)
     print(f'coeff: {linear_model_regressor.coef_}')
     print('Polynomial regressor:')
-    print_regressor_score(y_test, y_predicted_polynomial)
+    _print_regressor_score(y_test, y_predicted_polynomial)
 
     plt.scatter(X_test, y_predicted_decision_tree, c='green', marker='o')
     plt.scatter(X_test, y_test, c='red', marker='*')
@@ -159,11 +145,42 @@ def todo4():
     plt.show()
 
 
+def regressor_9000(x: float) -> float:
+    if x >= 4.0:
+        return 8.0
+    else:
+        # 0.14,0.28
+        # 2.00,4.00
+        # x     y
+        return x*2
+
+
+def todo_final_boss():
+    print_function_name()
+
+    data = np.loadtxt(fname='./../data/battery_problem_data.csv', delimiter=',')
+
+    X = data[:, 0].reshape(-1, 1)
+    y = data[:, 1]
+
+    X_train, X_test, y_train, y_test = model_selection.train_test_split(X, y, test_size=0.2)
+
+    y_predicted = np.fromiter((regressor_9000(x) for x in X_test), y_test.dtype)
+
+    _print_regressor_score(y_test, y_predicted)
+
+    plt.scatter(X_test, y_test, c='red', marker='*')
+    plt.scatter(X_test, y_predicted, c='green', marker='o')
+    plt.show()
+
+
 def main():
-    todo1()
-    todo2()
-    todo3()
-    todo4()
+    # todo_1() - not implemented yet
+    # todo_2() - not implemented yet
+    todo_3()
+    todo_4()
+    todo_5_6()
+    todo_final_boss()
 
 
 if __name__ == '__main__':
