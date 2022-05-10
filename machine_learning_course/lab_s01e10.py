@@ -11,7 +11,7 @@ from darts.utils.statistics import check_seasonality
 
 
 def load_and_split_air_passenger() -> Tuple[darts.TimeSeries, darts.TimeSeries]:
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
+    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=',')
     series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
 
     train, test = series[:-36], series[-36:]
@@ -24,20 +24,23 @@ def todo_1():
 
 
 def todo_2():
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
+    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=',')
     print(df.describe())
+    print(df.head(5))
+    print(df.dtypes)
 
     df.plot()
-    plt.show()
+    # plt.show()
 
     series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
     print(series)
+    plt.figure()
     series.plot()
     plt.show()
 
 
 def todo_3():
-    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=",")
+    df = pd.read_csv('.\..\data\AirPassengers.csv', delimiter=',')
     series = darts.TimeSeries.from_dataframe(df, 'Month', '#Passengers')
 
     train1, test1 = series[:-36], series[-36:]
@@ -59,13 +62,14 @@ def todo_4_5():
     model.fit(train)
     prediction = model.predict(len(test))
 
-    score = mape(actual_series=test, pred_series=prediction)
-    print(f'{score=}')
+    mape_score = mape(actual_series=test, pred_series=prediction)
+    print(f'{mape_score=} for {model}')
 
     train.plot()
     test.plot(label='test')
     prediction.plot(label='forecast')
     plt.legend()
+    plt.title(f'{model}')
     plt.show()
 
 
@@ -81,13 +85,14 @@ def todo_6():
     model.fit(train)
     prediction = model.predict(len(test))
 
-    score = mape(actual_series=test, pred_series=prediction)
-    print(f'{score=}')
+    mape_score = mape(actual_series=test, pred_series=prediction)
+    print(f'{mape_score=} for {model}')
 
     train.plot()
     test.plot(label='test')
     prediction.plot(label='forecast')
     plt.legend()
+    plt.title(f'{model}')
     plt.show()
 
 
@@ -103,8 +108,8 @@ def todo_6_last_question():
     prediction_seasonal = model_seasonal.predict(len(test))
 
     prediction_combined = prediction_drift + prediction_seasonal - train.last_value()
-    score = mape(actual_series=test, pred_series=prediction_combined)
-    print(f'{score=}')
+    mape_score = mape(actual_series=test, pred_series=prediction_combined)
+    print(f'{mape_score=} for combined {model_drift} and {model_seasonal}')
 
     train.plot()
     test.plot(label='test')
@@ -112,6 +117,7 @@ def todo_6_last_question():
     prediction_drift.plot(label='prediction_drift')
     prediction_seasonal.plot(label='prediction_seasonal')
     plt.legend()
+    plt.title(f'{model_drift} + {model_seasonal}')
     plt.show()
 
 
@@ -125,12 +131,12 @@ def todo_7():
     model_theta.fit(train)
 
     prediction_exponential = model_exponential.predict(len(test))
-    score = mape(actual_series=test, pred_series=prediction_exponential)
-    print(f'{score=}')
+    mape_score = mape(actual_series=test, pred_series=prediction_exponential)
+    print(f'{mape_score=} for {model_exponential}')
 
     prediction_theta = model_theta.predict(len(test))
-    score = mape(actual_series=test, pred_series=prediction_theta)
-    print(f'{score=}')
+    mape_score = mape(actual_series=test, pred_series=prediction_theta)
+    print(f'{mape_score=} for {model_theta}')
 
     train.plot()
     test.plot(label='test')
@@ -143,23 +149,24 @@ def todo_7():
 def todo_8():
     train, test = load_and_split_air_passenger()
 
-    model = RegressionModel(36, model=sklearn.tree.DecisionTreeRegressor())
+    model = RegressionModel(60, model=sklearn.ensemble.GradientBoostingRegressor())
     model.fit(train)
 
     prediction = model.predict(len(test))
-    score = mape(actual_series=test, pred_series=prediction)
-    print(f'{score=}')
+    mape_score = mape(actual_series=test, pred_series=prediction)
+    print(f'{mape_score=} for {model}')
 
     train.plot()
     test.plot(label='test')
     prediction.plot(label='forecast')
     plt.legend()
+    plt.title(f'{model}')
     plt.show()
 
 
 def todo_9():
     # TODO(MF): add support for another csv with data
-    # TODO(MF): add sample with loading dataset from darts libarry
+    # TODO(MF): add sample with loading dataset from darts library
     darts.datase
     df = pd.read_csv('.\..\data\daily_min_temperatures_Melbourne_1981_1990.csv', delimiter=",")
     pass
