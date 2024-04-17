@@ -21,3 +21,6 @@ pypiwin32  # requirement for pandsasgui under windows
 # wordcloud - on windows has to be installed from mr Gholke repository of prebuil packages
 
 click
+
+# project 2024
+nba_api
