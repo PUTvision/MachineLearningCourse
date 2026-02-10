@@ -1,10 +1,14 @@
-scikit-learn
-matplotlib
-pandas
+# basic
 numpy
-mlxtend
-gap_stat
+scikit-learn
+pandas
 seaborn
+matplotlib
+
+# visualization
+mlxtend  # for decision regions
+gap_stat
+
 missingno
 gap-stat
 
@@ -14,10 +18,17 @@ torchaudio
 torchtext
 pytorch-lightning
 
+# time series
 u8darts[torch, pmdarima]
+
+#ctgan
+sdv
 
 pandasgui
 pypiwin32  # requirement for pandsasgui under windows
 # wordcloud - on windows has to be installed from mr Gholke repository of prebuil packages
 
 click
+
+# project 2024
+nba_api

@@ -81,9 +81,12 @@ def todo_4():
     y_predicted = clf.predict(X_test)
 
     print(f'Classification report: \n{metrics.classification_report(y_test, y_predicted)}')
-    print(f'Confusion matrix: \n{metrics.confusion_matrix(y_test, y_predicted)}')
 
-    metrics.plot_confusion_matrix(clf, X_test, y_test)
+    cm = metrics.confusion_matrix(y_test, y_predicted, labels=clf.classes_)
+    print(f'Confusion matrix: \n{cm}')
+
+    disp = metrics.ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=clf.classes_)
+    disp.plot()
     plt.show()
 
     for digit, gt, pred in zip(X_test, y_test, y_predicted):

@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from matplotlib.colors import ListedColormap
 from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import pandas as pd
@@ -8,6 +7,7 @@ import seaborn as sns
 
 from sklearn import datasets
 from sklearn import ensemble
+from sklearn import svm
 from sklearn import impute
 from sklearn import model_selection
 from sklearn import preprocessing
@@ -15,9 +15,9 @@ from sklearn import metrics
 from sklearn import pipeline, cluster
 from sklearn import decomposition, manifold
 
-import gap_statistic
+# import gap_statistic
 
-from lab_s01_utils import print_function_name
+from lab_s01_utils import print_function_name, plot_iris
 
 
 def todo_1():
@@ -141,8 +141,6 @@ def todo_3():
     print_function_name()
 
     X, y = datasets.fetch_openml('diabetes', as_frame=True, return_X_y=True)
-
-    from lab_s01e03 import plot_iris
 
     plot_iris(X[['mass', 'plas']].to_numpy(), title='mass vs plas')
     plt.show()
