@@ -123,7 +123,7 @@ def todo_5_6():
 
     polynomial_regressor = pipeline.Pipeline(
         [
-            ('poly', preprocessing.PolynomialFeatures(degree=9)),
+            ('poly', preprocessing.PolynomialFeatures(degree=3)),
             ('linear', LinearRegression())
         ]
     )
@@ -140,11 +140,21 @@ def todo_5_6():
     print('Polynomial regressor:')
     _print_regressor_score(y_test, y_predicted_polynomial)
 
+    X_dense = np.arange(0, 12.01, 0.001)
+    y_predicted_dense_tree = decision_tree_regressor.predict(X_dense.reshape(-1, 1))
+    y_predicted_dense_polynomial = polynomial_regressor.predict(X_dense.reshape(-1, 1))
+
     plt.scatter(X_test, y_predicted_decision_tree, c='green', marker='o')
+    # plt.scatter(X_dense, y_predicted_dense, c='green', marker='o', alpha=0.5)
+    plt.plot(X_dense, y_predicted_dense_tree, c='green')
+    # plt.plot(X_test, y_predicted_decision_tree, c='green')
     plt.scatter(X_test, y_test, c='red', marker='*')
+    # plt.plot(X_test, y_test, c='red')
     plt.scatter(X_test, y_predicted_linear, c='orange', marker='+')
     plt.plot(X_test, y_predicted_linear, c='orange')
     plt.scatter(X_test, y_predicted_polynomial, c='blue', marker='.')
+    plt.plot(X_dense, y_predicted_dense_polynomial, c='blue')
+    # plt.plot(X_test, y_predicted_polynomial, c='blue')
     plt.show()
 
 

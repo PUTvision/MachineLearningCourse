@@ -107,7 +107,7 @@ def todo_6_last_question():
     prediction_drift = model_drift.predict(len(test))
     prediction_seasonal = model_seasonal.predict(len(test))
 
-    prediction_combined = prediction_drift + prediction_seasonal - train.last_value()
+    prediction_combined = prediction_drift + prediction_seasonal - train.last_value()  # train.values()[-1][0]
     mape_score = mape(actual_series=test, pred_series=prediction_combined)
     print(f'{mape_score=} for combined {model_drift} and {model_seasonal}')
 
@@ -181,6 +181,7 @@ def main():
     todo_6_last_question()
     todo_7()
     todo_8()
+    # todo_9()  # WIP
 
 
 if __name__ == '__main__':

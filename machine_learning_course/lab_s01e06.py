@@ -20,7 +20,7 @@ def random_cabin(clas):
     if clas == 1.0:
         deck = random.choices(['C', 'B', 'D', 'E', 'A', 'T'],
                               weights=[0.346405, 0.241830, 0.169935, 0.130719, 0.104575, 0.006536])
-        # probability taken from occurance of deck in clas
+        # probability taken from occurrence of deck in clas
 
     elif clas == 2.0:
         deck = random.choices(['D', 'E', 'F'], weights=[0.333333, 0.222222, 0.444444])
@@ -91,8 +91,12 @@ def todo():
     X: pd.DataFrame = X
     y: pd.DataFrame = y
 
+    print('Whole dataset:')
+    print('head(5):')
     print(X.head(5))
+    print('info:')
     print(X.info())
+    print('desribe:')
     print(X.describe())
 
     print(y.head(5))
@@ -140,15 +144,55 @@ def todo():
                     cmap="coolwarm")
     plt.show()
 
+    sns.pairplot(X_combined, vars=['pclass', 'age', 'sex', 'fare'], hue='survived')
+    plt.show()
 
 
 
+def bing_chat():
+    import pandas as pd
+    import numpy as np
 
+    # Load Titanic dataset
+    # train = pd.read_csv('https://web.stanford.edu/class/archive/cs/cs109/cs109.1166/stuff/titanic.csv')
+
+    train, y = datasets.fetch_openml(name='Titanic', version=1, return_X_y=True, as_frame=True)
+
+    # Fill missing values
+    train['age'].fillna(train['age'].median(), inplace=True)
+    train['embarked'].fillna(train['embarked'].mode()[0], inplace=True)
+    train['fare'].fillna(train['fare'].median(), inplace=True)
+
+    # Generate new features
+    train['familySize'] = train['sibsp'] + train['parch'] + 1
+    train['isAlone'] = np.where(train['familySize'] == 1, 1, 0)
+    train['title'] = train['name'].str.split(", ", expand=True)[1].str.split(".", expand=True)[0]
+
+    from sklearn.preprocessing import LabelEncoder
+    labelencoder = LabelEncoder()
+    train['sex'] = labelencoder.fit_transform(train['sex'])
+    train['embarked'] = labelencoder.fit_transform(train['embarked'])
+    train['title'] = labelencoder.fit_transform(train['title'])
+
+    train = train[['pclass', 'sex', 'age', 'sibsp', 'parch', 'fare', 'embarked', 'familySize', 'isAlone', 'title']]
+    y = y
+
+    # Prepare classifier
+    from sklearn.model_selection import train_test_split
+    from sklearn.tree import DecisionTreeClassifier
+
+    X_train, X_test, y_train, y_test = train_test_split(train, y, test_size=0.2)
+
+    clf = DecisionTreeClassifier()
+    clf.fit(X_train, y_train)
+
+    print("Accuracy:", clf.score(X_test, y_test))
 
 
 
 def main():
     todo()
+    # bing_chat()
 
 
 if __name__ == '__main__':

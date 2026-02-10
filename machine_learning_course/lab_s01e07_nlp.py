@@ -1,5 +1,8 @@
 import time
 
+from sklearn.datasets import fetch_20newsgroups
+from sklearn.feature_extraction.text import CountVectorizer, TfidfTransformer
+
 from torch.utils.data.dataset import random_split
 from torchtext.data.functional import to_map_style_dataset
 import torchtext
@@ -11,21 +14,23 @@ from lab_s01e07_nlp_utils import TextClassificationModel, train, evaluate
 
 
 def ex_1():
-    text = "I'm having a wonderful time at WZUM laboratories!"
-    print(text.split())
+    text = "I'm having a wonderful time at WZUM laboratories! WZUM changed my life!!!"
 
-    text = "I'm having a wonderful time at WZUM laboratories!"
-    tokenizer = torchtext.data.get_tokenizer("basic_english")
-    print(tokenizer(text))
+    print(f'Naive split: {text.split()=}')
+    torch_tokenizer = torchtext.data.get_tokenizer('basic_english')
+    print(f'[torch] based split: {torch_tokenizer(text)=}')
+
+    sklearn_tokenizer = CountVectorizer().build_tokenizer()
+    print(f'[sklearn] based split: {sklearn_tokenizer(text)=}')
 
     t1 = "John likes to watch movies. Mary likes movies too."
     t2 = "Mary also likes to watch football games."
-    t1 = tokenizer(t1)
-    t2 = tokenizer(t2)
+    t1 = torch_tokenizer(t1)
+    t2 = torch_tokenizer(t2)
     vocab = set(t1 + t2)
-    vocab = dict.fromkeys(vocab, 0)
-    print(vocab)
+    print(f'[torch] Combined tokenizer from two text: {vocab=}')
 
+    vocab = dict.fromkeys(vocab, 0)
     t1_vocab = vocab.copy()
     for word in t1:
         t1_vocab[word] += 1
@@ -34,15 +39,15 @@ def ex_1():
     for word in t2:
         t2_vocab[word] += 1
 
-    print(t1_vocab)
-    print(t2_vocab)
+    print(f'Occurences of text 1: {t1_vocab=}')
+    print(f'Occurences of text 2: {t2_vocab=}')
 
     t1 = list(t1_vocab.values())
     t2 = list(t2_vocab.values())
 
 
 def ex_2():
-    tokenizer = torchtext.data.get_tokenizer("basic_english")
+    tokenizer = torchtext.data.get_tokenizer('basic_english')
 
     t1 = "John likes to watch movies. Mary likes movies too."
     t2 = "Mary also likes to watch football games."
@@ -63,6 +68,17 @@ def ex_2():
         for word in tokens:
             # print(f'{vocab[word]=}')
             print(f'vocab[{word}]={vocab[word]}')
+
+
+def ex_3_sklearn():
+    categories = ['sci.space', 'rec.sport.hockey',
+                  'comp.graphics', 'sci.med']
+    twenty_train = fetch_20newsgroups(subset='train',
+                                      categories=categories,
+                                      shuffle=True,
+                                      random_state=42)
+
+    print(f'{twenty_train.data[0]=}')
 
 
 def ex_3():
@@ -145,7 +161,8 @@ def ex_3():
 def main():
     # ex_1()
     # ex_2()
-    ex_3()
+    # ex_3()
+    ex_3_sklearn()
 
 
 if __name__ == '__main__':

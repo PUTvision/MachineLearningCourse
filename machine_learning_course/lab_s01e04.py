@@ -70,7 +70,10 @@ def todo_1():
 
     df_mass = X_train[['mass']]
     print(df_mass.head(5))
+    plt.show()
 
+
+def todo_1_part_2():
     X_train_isolation = X_train.values
     X_train_isolation = X_train_isolation[:, [1, 5]]
     X_test_isolation = X_test.values
@@ -148,6 +151,9 @@ def todo_3():
 
 def todo_4():
     print_function_name()
+
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.max_rows', None)
 
     X, y = datasets.fetch_openml('diabetes', as_frame=True, return_X_y=True)
     print(X.describe())
