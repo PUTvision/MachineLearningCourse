@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 
 from sklearn import datasets
@@ -28,6 +27,7 @@ def todo_2():
     plt.show()
 
     plt.imshow([digits.data[index]], cmap=plt.cm.gray_r)
+    plt.title('Digits data as 1D array (flattened pixels)')
     plt.show()
 
 
@@ -41,8 +41,8 @@ def todo_3():
     )
 
     print(f'{len(digits.data)=}')
-    print(f'{len(X_train.data)=}')
-    print(f'{len(X_test.data)=}')
+    print(f'{len(X_train)=}')
+    print(f'{len(X_test)=}')
 
 
 def todo_4():
@@ -102,13 +102,19 @@ def todo_6():
         n_clusters_per_class=2
     )
     plt.scatter(X[:, 0], X[:, 1], marker='o', c=y, s=25, edgecolor='k')
+    plt.xlabel('Feature 1')
+    plt.ylabel('Feature 2')
+    plt.title('2D Classification Data')
     plt.show()
 
     print(f'{y=}')
 
     fig = plt.figure()
-    ax = Axes3D(fig)
+    ax = fig.add_subplot(111, projection='3d')
     ax.scatter(X[:, 0], X[:, 1], X[:, 2], s=25, c=y)
+    ax.set_xlabel('Feature 1')
+    ax.set_ylabel('Feature 2')
+    ax.set_zlabel('Feature 3')
     plt.show()
 
 
