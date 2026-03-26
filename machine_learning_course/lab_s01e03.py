@@ -15,7 +15,7 @@ from sklearn import pipeline
 
 from mlxtend.plotting import plot_decision_regions
 
-from lab_s01_utils import print_function_name, plot_iris_decision_boundary
+from lab_s01_utils import print_function_name, plot_iris_decision_boundary, plot_iris
 
 
 def todo_1():
