@@ -7,10 +7,8 @@ matplotlib
 
 # visualization
 mlxtend  # for decision regions
-gap_stat
-
+# gap_stat - issues with uv and new Python releases (3.11 and above)
 missingno
-gap-stat
 
 torch
 torchvision
@@ -25,7 +23,7 @@ u8darts[torch, pmdarima]
 sdv
 
 pandasgui
-pypiwin32  # requirement for pandsasgui under windows
+# pypiwin32  # requirement for pandsasgui under windows
 # wordcloud - on windows has to be installed from mr Gholke repository of prebuil packages
 
 click
