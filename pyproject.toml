@@ -12,7 +12,6 @@ dependencies = [
     "nba-api>=1.11.4",
     "numpy>=2.4.4",
     "pandas>=3.0.2",
-    "pandasgui>=0.2.15",
     "pytorch-lightning>=2.5.2",
     "scikit-learn>=1.8.0",
     "scipy-stubs~=1.17.1",
